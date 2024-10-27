@@ -1,0 +1,141 @@
+void find_south_east() {
+  while (not_facing_east()) {
+    turn_left();  
+  }
+  while (front_is_clear()) {
+    step();
+  }
+  while (not_facing_south()) {
+    turn_left();
+  }
+  while (front_is_clear()) {
+    step();
+  }
+  if (front_is_blocked() && left_is_blocked()) {
+    //
+  } 
+  while (not_facing_west()) {
+    turn_left();
+  }
+}
+
+
+
+bool facing_vertical() {
+  if (facing_north || facing_south) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+
+void mega_beeper() {
+  while(true) {
+    if (front_is_clear()) {
+      if (beepers_present()) {
+        while (beepers_present()) { 
+          pick_beeper();
+        }
+      }
+      if (right_is_clear()) {
+        turn_left();
+        turn_left();
+        while (left_is_clear()) {
+          step();
+        }
+        turn_left();
+        turn_left();
+        break;
+      } else {
+        step();
+      }
+    } else {
+      turn_left();
+      while (right_is_blocked() && front_is_clear()) {
+        step();
+      }
+      turn_left();
+      turn_left();
+      turn_left();
+      if (front_is_blocked() && right_is_blocked()) {
+        turn_off();
+      }
+      do {
+        step();
+        if (beepers_present()) {
+          while (beepers_present()) {
+            pick_beeper();
+          }
+        }
+      } while (right_is_blocked() && front_is_clear());
+    }
+  }
+}
+
+
+
+void medium_beeper() {
+  while (no_beepers_present()) {
+    if (front_is_clear()) {
+        step();
+    } else {
+        turn_left();
+        while (right_is_blocked() && no_beepers_present()) {
+          step();
+        }
+        turn_left();
+        turn_left();
+        turn_left();
+        do {
+          step();
+        } while (right_is_blocked() && no_beepers_present()); // або front_is_clear();
+        turn_left();
+        turn_left();
+        turn_left();
+        while (front_is_clear() && no_beepers_present()) {
+          step();
+        }
+        turn_left();
+    }
+  }
+}
+
+
+
+void divide_n() {
+  while (no_beepers_present()) {
+    step();
+  }
+  if (front_is_blocked() && no_beepers_present()) {
+    turn_off();
+  } 
+  if (beepers_present()) {
+    while (beepers_present()) {
+      pick_beeper();
+    }
+  }
+  while (beepers_in_bag()) {
+    put_beeper();
+    step();
+    if (beepers_in_bag()) {
+      put_beeper();
+    } else {
+      break;
+    }
+    turn_left();
+    turn_left();
+    step();
+    turn_left();
+    turn_left();
+  }
+  while (not_facing_west()) {
+    turn_left();
+  }
+  while (beepers_present()) {
+    step();
+  }
+  turn_left();
+  turn_left();
+}

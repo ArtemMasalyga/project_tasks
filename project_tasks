@@ -51,7 +51,7 @@ void mega_beeper() {
       } else {
         step();
       }
-    } else {
+    } else { 
       turn_left();
       while (right_is_blocked() && front_is_clear()) {
         step();
